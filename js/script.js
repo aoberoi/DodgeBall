@@ -27,6 +27,15 @@ var clearContext = function(context) {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
+// Helper Function
+// return a new object which inherits from o
+// see: http://javascript.crockford.com/prototypal.html
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
 // Create ball object
 var ball = {
   x: null,
@@ -38,16 +47,13 @@ var ball = {
     context.save();
     context.beginPath();
     // params: center.x, center.y, radius, beginRadians, endRadians
-    context.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+    context.arc(Math.floor(this.x) - 0.5, 
+                Math.floor(this.y) - 0.5, 
+                Math.floor(this.radius),
+                0, Math.PI*2);
     context.fillStyle = this.color;
     context.fill();
     context.closePath();
-    context.restore();
-  },
-  clear: function(context) {
-    context.save();
-    context.globalCompositeOperation = 'xor';
-    this.draw(context);
     context.restore();
   },
   move: function(bounds) {
@@ -82,9 +88,8 @@ var beginAnimation = function(context, objects) {
   };
   // The Object Animation Loop
   var animationLoop = function() {
+    clearContext(context);
     forAllObjects(function() {
-      // clear object
-      this.clear(context);
       // move object
       this.move(bounds(context), objects);
       // draw object
