@@ -44,6 +44,10 @@ function object(o) {
 }
 
 // Create ball object
+//   it will be displayed, so it needs its own draw() function
+//   it can also be positioned, so has an x and y
+//   it can also move, so it has a velocity
+//   it is a ball, so it needs properties such as radius, color
 var ball = {
   x: null,
   y: null,
