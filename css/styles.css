@@ -222,14 +222,12 @@ h1 {
 }
 
 #main {
-  border: 1px solid #fff;
   text-align: center;
 }
 
 #canvas {
+  border: 1px solid #fff;
 }
-
-
 
 
 
