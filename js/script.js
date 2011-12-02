@@ -85,11 +85,6 @@ var beginAnimation = function(context, objects) {
     }
   };
 
-  // Helper Function
-  // define the boundaries relative to a context
-  var bound = function(ctx) {
-    
-  };
   // The Object Animation Loop
   var animationLoop = function() {
     clearContext(context);
