@@ -4,34 +4,7 @@ var BALL_COLOR = "#000066";
 var BALL_RADIUS = 20;
 var INITIAL_VEL = 2;
 
-// Position an object in center of canvas
-// params:
-//    object: An object which represents something to place on the screen.
-//            Must have x and y properties. Recommended to have a draw method
-//    canvas: The canvas (DOMElement) where object will eventually be drawn.
-var positionCenter = function(object, canvas) {
-  object.x = canvas.width / 2;
-  object.y = canvas.height / 2;
-}
-
-// Return an object that represents the bounds of a given canvas context
-// params:
-//    context: A context obtained from a canvas element
-var contextBounds = function(context) {
-  return {
-    xMin : 0,
-    xMax : context.canvas.width,
-    yMin : 0,
-    yMax : context.canvas.height
-  }
-};
-
-// Clear the given context completely
-// params:
-//    context: A context obtained from a canvas element
-var clearContext = function(context) {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-}
+// -------------- JavaScript Sugar ----------------
 
 // Crockford's prototypical constructor: return a new object which inherits from o
 // see: http://javascript.crockford.com/prototypal.html
@@ -56,6 +29,8 @@ var forAllInArray = function(anArr,func) {
     }
   }
 };
+
+// --------------- Physical Objects ----------------
 
 // Create ball object
 //   it will be displayed, so it needs its own draw() function
@@ -92,6 +67,37 @@ var ball = {
   }
 };
 
+// -------------- Animation -----------------
+
+// Position an object in center of canvas
+// params:
+//    object: An object which represents something to place on the screen.
+//            Must have x and y properties. Recommended to have a draw method
+//    canvas: The canvas (DOMElement) where object will eventually be drawn.
+var positionCenter = function(object, canvas) {
+  object.x = canvas.width / 2;
+  object.y = canvas.height / 2;
+}
+
+// Return an object that represents the bounds of a given canvas context
+// params:
+//    context: A context obtained from a canvas element
+var contextBounds = function(context) {
+  return {
+    xMin : 0,
+    xMax : context.canvas.width,
+    yMin : 0,
+    yMax : context.canvas.height
+  }
+};
+
+// Clear the given context completely
+// params:
+//    context: A context obtained from a canvas element
+var clearContext = function(context) {
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+}
+
 // Begin the Animation Run Loop
 // params:
 //    context: the canvas context where the animation will take place
@@ -112,6 +118,8 @@ var beginAnimation = function(context, objects) {
   // Running the Animation Loop on an interval
   var animationInterval = setInterval(animationLoop, 25);
 };
+
+// ---------------- View / DOM ---------------
 
 // Kick off anything that depends on the DOM
 //    This means anything that needs the view must be initialized here
