@@ -14,9 +14,10 @@ var positionCenter = function(object, canvas) {
   object.y = canvas.height / 2;
 }
 
-// Helper Function
-// define the boundaries relative to a context
-var bounds = function(context) {
+// Return an object that represents the bounds of a given canvas context
+// params:
+//    context: A context obtained from a canvas element
+var contextBounds = function(context) {
   return {
     xMin : 0,
     xMax : context.canvas.width,
@@ -25,15 +26,17 @@ var bounds = function(context) {
   }
 };
 
-// Helper Function
-// Clears the given context completely
+// Clear the given context completely
+// params:
+//    context: A context obtained from a canvas element
 var clearContext = function(context) {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 }
 
-// Helper Function
-// return a new object which inherits from o
+// Crockford's prototypical constructor: return a new object which inherits from o
 // see: http://javascript.crockford.com/prototypal.html
+// params:
+//    o: An object that the returned object should inherit from
 function object(o) {
   function F() {}
   F.prototype = o;
@@ -90,7 +93,7 @@ var beginAnimation = function(context, objects) {
     clearContext(context);
     forAllObjects(function() {
       // move object
-      this.move(bounds(context), objects);
+      this.move(contextBounds(context), objects);
       // draw object
       this.draw(context);
     });
