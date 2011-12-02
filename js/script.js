@@ -5,9 +5,13 @@ var BALL_RADIUS = 20;
 var INITIAL_VEL = 2;
 
 // Position an object in center of canvas
-var positionCenter = function(ball, canvas) {
-  ball.x = canvas.width / 2;
-  ball.y = canvas.height / 2;
+// params:
+//    object: An object which represents something to place on the screen.
+//            Must have x and y properties. Recommended to have a draw method
+//    canvas: The canvas (DOMElement) where object will eventually be drawn.
+var positionCenter = function(object, canvas) {
+  object.x = canvas.width / 2;
+  object.y = canvas.height / 2;
 }
 
 // Helper Function
