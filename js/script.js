@@ -43,6 +43,20 @@ function object(o) {
   return new F();
 }
 
+// Call a function for each object in the given array
+// params:
+//    anArr: an array of objects
+//           note: if this is not an array, this function will do nothing
+//    func:  a function which will be invoked for each object in anArr,
+//           we make sure that 'this' will refer to the actual object from anArr
+var forAllInArray = function(anArr,func) {
+  if (anArr.constructor == Array) {
+    for (var i=0; i < anArr.length; i++) {
+      func.call(anArr[i]);
+    }
+  }
+};
+
 // Create ball object
 //   it will be displayed, so it needs its own draw() function
 //   it can also be positioned, so has an x and y
@@ -57,11 +71,10 @@ var ball = {
   draw: function(context) {
     context.save();
     context.beginPath();
-    // params: center.x, center.y, radius, beginRadians, endRadians
-    context.arc(Math.floor(this.x) - 0.5, 
-                Math.floor(this.y) - 0.5, 
-                Math.floor(this.radius),
-                0, Math.PI*2);
+    context.arc(Math.floor(this.x) - 0.5, // center.x
+                Math.floor(this.y) - 0.5, // center.y
+                Math.floor(this.radius),  // radius
+                0, Math.PI*2);            // beginAngle, endAngle
     context.fillStyle = this.color;
     context.fill();
     context.closePath();
@@ -79,23 +92,16 @@ var ball = {
   }
 };
 
-// Begin the animation run loop
+// Begin the Animation Run Loop
+// params:
+//    context: the canvas context where the animation will take place
+//    objects: an array of objects to be animated -> they must all have a draw() function
 var beginAnimation = function(context, objects) {
-  // Helper Function
-  // Iterate through all objects
-  // inside func, this refers to the individual object
-  var forAllObjects = function(func) {
-    if (objects.constructor == Array) {
-      for (var i=0; i < objects.length; i++) {
-        func.call(objects[i]);
-      }
-    }
-  };
 
-  // The Object Animation Loop
+  // The Animation Run Loop
   var animationLoop = function() {
     clearContext(context);
-    forAllObjects(function() {
+    forAllInArray(objects, function() {
       // move object
       this.move(contextBounds(context), objects);
       // draw object
@@ -103,26 +109,21 @@ var beginAnimation = function(context, objects) {
     });
   };
 
-  // Draw the objects for the first time
-  forAllObjects(function() {
-    this.draw(context);
-  });
-
   // Running the Animation Loop on an interval
   var animationInterval = setInterval(animationLoop, 25);
 };
 
-// DOM is ready to be traversed, implmentation scraped from jQuery
+// Kick off anything that depends on the DOM
+//    This means anything that needs the view must be initialized here
 DomReady.ready(function() {
 
   var canvas = document.getElementById('canvas');
   var context = canvas.getContext('2d');
   
-  // Initialize position of objects
+  // Initialization of objects which depends on view (canvas)
   positionCenter(ball, canvas);
 
   // Begin the animation loop
-  // second parameter is the objects array
   beginAnimation(context, [ ball ]);
 
 });
