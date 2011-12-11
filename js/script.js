@@ -6,14 +6,15 @@ var INITIAL_VEL = 2;
 
 // -------------- JavaScript Sugar ----------------
 
-// Crockford's prototypical constructor: return a new object which inherits from o
-// see: http://javascript.crockford.com/prototypal.html
-// params:
-//    o: An object that the returned object should inherit from
-function object(o) {
-  function F() {}
-  F.prototype = o;
-  return new F();
+if (!Object.create) {
+  Object.create = function (o) {
+    if (arguments.length > 1) {
+      throw new Error('Object.create implementation only accepts the first parameter.');
+    }
+    function F() {}
+    F.prototype = o;
+    return new F();
+  }
 }
 
 // Call a function for each object in the given array
