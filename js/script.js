@@ -19,6 +19,7 @@ if (!Object.create) {
 
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.com/#x15.4.4.18
+// Copied from Mozilla https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/forEach
 if ( !Array.prototype.forEach ) {
 
   Array.prototype.forEach = function( callback, thisArg ) {
