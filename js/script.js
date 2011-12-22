@@ -2,6 +2,9 @@
 // We are only going to have one of these, might as well encapsulate into its own closure
 var DODGEBALL = function(window, document, DomReady) {
 
+  // Creating an envelope that we can hang any exportable pieces of this module off of
+  var me = {};
+
   // Defining traits that can be reused to compose behavior
 
   // Physical objects that have an origin and bounds
@@ -14,6 +17,7 @@ var DODGEBALL = function(window, document, DomReady) {
   };
 
   // Displayed objects have the ability to be drawn
+  // The requirement is a draw function that takes a context
   var isDisplayed = function(options) {
     // TODO: default function allocated at every call. not optimal
     this.draw = options.draw || function() { console.log('Attempted to draw an invisible object') };
@@ -159,6 +163,9 @@ var DODGEBALL = function(window, document, DomReady) {
     animationLoop.init(context, [ firstBall ]);
     animationLoop.start();
   });
+
+  return me;
+  
 // This is cool, put dependencies in here. minification win
 }(window, document, DomReady);
 
